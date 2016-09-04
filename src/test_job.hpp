@@ -8,14 +8,15 @@ using namespace process;
 
 class TestJob : public Job {
 public:
-  TestJob() {}
+  TestJob(int id) : Job(id) {}
+
   virtual ~TestJob() {}
 
-  virtual Future<int> run();
+  virtual Future<int> work();
 private:
 };
 
-Future<int> TestJob::run()
+Future<int> TestJob::work()
 {
   return promise.future();
 }

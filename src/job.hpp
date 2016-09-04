@@ -7,26 +7,43 @@ using namespace process;
 
 class Job {
 public:
-  Job() {}
+  Job(int _id) : st(0), et(0), id(_id) {
+    //std::cout << "id : " << id << std::endl;
+  }
+  /*Job() : st(0), et(0), id(0) {*/
+    //std::cout << "id : " << id << std::endl;
+  /*}*/
   virtual ~Job() {}
 
-  virtual Future<int> run() = 0;
+  virtual Future<int> work() = 0;
 
-  //inline void run() {
-    //this->doJob();
-    //promise.future().onAny(
-        //defer([=] (const Future<int>& future) {
-          //terminate(self());
-          //}));
-    //return promise.future();
-  /*}*/
+  virtual Future<int> run() {
+    // st
+    //std::cout << " Doing job, idx:" << idx << std::endl;
+    return this->work();
+  };
 
-  inline void done(int t) {
-    promise.set(t);
+  inline void done(int idx) {
+    // et
+    //std::cout << " Job, idx:" << idx << " cost " << getCostTime() << " ms"<< std::endl;
+    promise.set(idx);
   }
+
+  long getCostTime() {
+  //  std::cout << "Job " << id << " et:" << et << std::endl;;
+   // std::cout << "Job " << id << " st:" << st << std::endl;;
+    return (et - st);
+  }
+
+public:
+  int id;
 
 protected:
   Promise<int> promise;
+
+private:
+  long st;
+  long et;
 };
 
 #endif

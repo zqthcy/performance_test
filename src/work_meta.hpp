@@ -5,6 +5,10 @@
 
 struct WorkMeta {
   std::atomic<int>* done;
+  long st;
+  long et;
+  std::atomic<int>* index;
+  std::atomic<long>* totalRT;
 };
 
 

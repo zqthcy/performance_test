@@ -1,24 +1,17 @@
 #include <iostream>
 #include <atomic>
-#include "test_job.hpp"
-#include "work_process.hpp"
+#include "perf_test.hpp"
 
 using namespace std;
 
 int main()
 {
   cout << "Hello World!" << endl; 
-  WorkMeta *wm = new WorkMeta();
-  wm->done = new atomic<int>(0); 
 
-  WorkProcess process(wm, 10);
-  PID<WorkProcess> pid = spawn(&process);
-
-  Job* job = new TestJob(); 
-
-  dispatch(pid, &WorkProcess::startWork, job);
-
-  wait(pid);
+  // PerfTest 
+  // 1.concurrency, 2.test count
+  PerfTest perfTest(3, 6);
+  perfTest.startTests();
 
   return 0;
 }
